@@ -20,5 +20,5 @@ Install and config JPEG_PNG demo:<br>
 ```python manage.py makemigrations insert_image```<br>
 ```python manage.py migrate```<br>
 ```python manage.py runserver```<br>
-Browser address:
+Browser address:<br>
 ```localhost:8000/upload```<br>
