@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <h2 class="text-center">Upload File</h2>
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div id="file-drop-area" class="text-center">
+                  <div class="preview-container">
+                      <img id="preview-image" src="#" alt="Preview" style="display: none;" class="img-fluid" />
+                      <p id="preview-text">Drag &amp; drop a file here or click</p>+
+                  </div>
+                  {{ form.image_file }}
+                  {% if form.image_file.errors %}<strong><p style="color: red;">{{ form.image_file.errors }}</p></strong>{% endif %}
+                  {% if message %}
+                  {{ message }}
+                  <a href="{% url 'upload_image' %}">Reload page!</a>
+                  {% endif %}
+                </div>
+              <button type="submit" class="btn btn-primary mt-3">Upload</button>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+<script>
+    var fileDropArea = document.getElementById('file-drop-area');
+    var fileInput = document.getElementById('id_image_file');
+    var previewImage = document.getElementById('preview-image');
+    var previewText = document.getElementById('preview-text');
+
+    fileDropArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        fileDropArea.classList.add('dragover');
+    });
+
+    fileDropArea.addEventListener('dragleave', function () {
+        fileDropArea.classList.remove('dragover');
+    });
+
+    fileDropArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        fileDropArea.classList.remove('dragover');
+        fileInput.files = e.dataTransfer.files;
+
+        // Display the selected image preview
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            previewImage.src = event.target.result;
+            previewImage.style.display = 'block';
+            previewText.style.display = 'none';
+        };
+        reader.readAsDataURL(e.dataTransfer.files[0]);
+    });
+
+    // Show image preview when a file is selected via the file input
+    fileInput.addEventListener('change', function () {
+        var file = this.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                previewImage.src = event.target.result;
+                previewImage.style.display = 'block';
+                previewText.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+{% endblock %}
