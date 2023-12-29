@@ -14,9 +14,11 @@ Install and config JPEG_PNG demo:<br>
 ```python3 -m pip venv jpeg_png```<br>
 ```cd jpeg_png```<br>
 ```source bin/activate```<br>
-```git clone https://github.com/gconelhero/convert_image```<br>
+```git clone https://github.com/gconelhero/jpeg_png```<br>
 ```cd jpeg_png```<br>
 ```python -m pip install -r requirements.txt```<br>
 ```python manage.py makemigrations insert_image```<br>
 ```python manage.py migrate```<br>
 ```python manage.py runserver```<br>
+Browser address:
+```localhost:8000/upload```<br>
